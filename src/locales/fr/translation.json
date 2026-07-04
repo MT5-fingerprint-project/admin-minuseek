@@ -71,6 +71,45 @@
     }
   },
   "tenantUsers": {
+    "errors": {
+      "noTenant": "Selectionne un tenant avant de creer un utilisateur"
+    },
+    "form": {
+      "title": "Creer un utilisateur",
+      "description": "Ajoute un utilisateur dans le tenant selectionne.",
+      "submit": "Creer l'utilisateur",
+      "submitting": "Creation...",
+      "fields": {
+        "email": {
+          "label": "Email",
+          "placeholder": "prenom.nom@example.com"
+        },
+        "firstName": {
+          "label": "Prenom",
+          "placeholder": "Prenom"
+        },
+        "lastName": {
+          "label": "Nom",
+          "placeholder": "Nom"
+        }
+      }
+    },
+    "list": {
+      "title": "Utilisateurs du tenant",
+      "description": "Creation et verification rapide des utilisateurs rattaches au tenant.",
+      "empty": "Aucun utilisateur disponible pour ce tenant.",
+      "error": "Impossible de charger les utilisateurs.",
+      "noTenant": "Selectionne un tenant pour afficher ses utilisateurs."
+    },
+    "status": {
+      "enabled": "Actif",
+      "disabled": "Inactif",
+      "verified": "Email verifie",
+      "unverified": "Email non verifie"
+    },
+    "success": {
+      "created": "Utilisateur cree"
+    },
     "validation": {
       "emailInvalid": "Adresse email invalide"
     }

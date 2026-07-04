@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next'
 import { AdminShell } from '@/features/tenants/components/AdminShell'
 import { TenantCreateForm } from '@/features/tenants/components/TenantCreateForm'
 import { TenantList } from '@/features/tenants/components/TenantList'
+import { TenantUsersPanel } from '@/features/tenants/components/TenantUsersPanel'
 import { useCreateTenant, useTenants } from '@/features/tenants/hooks/useTenants'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/features/shared/ui/card'
 import type { Tenant } from '@/features/tenants/types/tenant'
@@ -93,6 +94,16 @@ export default function TenantsAdminPage() {
               ) : (
                 <p className="text-sm text-muted-foreground">{t('tenants.detail.noSelection')}</p>
               )}
+            </CardContent>
+          </Card>
+
+          <Card className="mt-6">
+            <CardHeader>
+              <CardTitle>{t('tenantUsers.list.title')}</CardTitle>
+              <CardDescription>{t('tenantUsers.list.description')}</CardDescription>
+            </CardHeader>
+            <CardContent>
+              <TenantUsersPanel tenant={selectedTenant} />
             </CardContent>
           </Card>
         </section>
