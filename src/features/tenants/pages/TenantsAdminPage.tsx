@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { AdminShell } from '@/features/tenants/components/AdminShell'
 import { TenantCreateForm } from '@/features/tenants/components/TenantCreateForm'
@@ -18,23 +18,18 @@ export default function TenantsAdminPage() {
   const tenantsQuery = useTenants()
   const createTenant = useCreateTenant()
   const tenants = tenantsQuery.data ?? []
-  const [selectedSlug, setSelectedSlug] = useState<string | null>(null)
-
-  useEffect(() => {
-    if (!selectedSlug && tenants.length > 0) {
-      setSelectedSlug(tenants[0].slug)
-    }
-  }, [selectedSlug, tenants])
+  const [selectedSlugOverride, setSelectedSlugOverride] = useState<string | null>(null)
+  const selectedSlug = selectedSlugOverride ?? tenants[0]?.slug ?? null
 
   const selectedTenant = tenants.find((tenant) => tenant.slug === selectedSlug) ?? null
 
   async function handleCreateTenant(values: Parameters<typeof createTenant.mutateAsync>[0]) {
     const tenant = await createTenant.mutateAsync(values)
-    setSelectedSlug(tenant.slug)
+    setSelectedSlugOverride(tenant.slug)
   }
 
   function handleSelectTenant(tenant: Tenant) {
-    setSelectedSlug(tenant.slug)
+    setSelectedSlugOverride(tenant.slug)
   }
 
   return (
