@@ -7,7 +7,9 @@
   "auth": {
     "connecting": "Connexion en cours...",
     "error": "Impossible de contacter le service d'authentification.",
-    "logout": "Se deconnecter"
+    "logout": "Se deconnecter",
+    "systemRealm": "Realm systeme",
+    "unknownUser": "Utilisateur systeme"
   },
   "common": {
     "actions": {
@@ -21,7 +23,47 @@
     },
     "loading": "Chargement..."
   },
+  "navigation": {
+    "tenants": "Tenants"
+  },
   "tenants": {
+    "fields": {
+      "slug": "Slug",
+      "databaseName": "Base de donnees",
+      "realm": "Realm Keycloak",
+      "createdAt": "Creation"
+    },
+    "form": {
+      "title": "Creer un tenant",
+      "description": "Ajoute un tenant au control-plane des que les routes back sont branchees.",
+      "submit": "Creer le tenant",
+      "submitting": "Creation...",
+      "fields": {
+        "slug": {
+          "label": "Slug",
+          "placeholder": "tenant-demo"
+        },
+        "displayName": {
+          "label": "Nom affiche",
+          "placeholder": "Tenant demo"
+        }
+      }
+    },
+    "list": {
+      "title": "Tenants existants",
+      "description": "Selectionne un tenant pour gerer ses utilisateurs.",
+      "empty": "Aucun tenant disponible.",
+      "error": "Impossible de charger les tenants."
+    },
+    "detail": {
+      "description": "Informations du tenant selectionne.",
+      "emptyTitle": "Aucun tenant selectionne",
+      "emptyDescription": "Cree ou selectionne un tenant pour afficher ses details.",
+      "noSelection": "Aucun tenant n'est selectionne."
+    },
+    "success": {
+      "created": "Tenant cree"
+    },
     "validation": {
       "slugRequired": "Le slug est requis",
       "slugInvalid": "Utilisez des minuscules, chiffres et tirets uniquement",
