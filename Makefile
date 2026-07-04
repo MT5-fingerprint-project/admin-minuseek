@@ -14,7 +14,7 @@ endif
 network:
 	@docker network inspect $(NETWORK) >$(NULL_DEV) 2>&1 || docker network create $(NETWORK)
 
-## Lance le front en mode dev avec hot-reload (Vite)
+## Lance l'admin en mode dev avec hot-reload (Vite) sur http://localhost:5174
 dev: network
 	$(COMPOSE) up --build -V
 
