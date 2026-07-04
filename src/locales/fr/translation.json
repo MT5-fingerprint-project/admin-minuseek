@@ -20,5 +20,17 @@
       "loadFailed": "Impossible de charger les donnees"
     },
     "loading": "Chargement..."
+  },
+  "tenants": {
+    "validation": {
+      "slugRequired": "Le slug est requis",
+      "slugInvalid": "Utilisez des minuscules, chiffres et tirets uniquement",
+      "displayNameRequired": "Le nom du tenant est requis"
+    }
+  },
+  "tenantUsers": {
+    "validation": {
+      "emailInvalid": "Adresse email invalide"
+    }
   }
 }
