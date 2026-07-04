@@ -1,158 +1,24 @@
 {
+  "app": {
+    "eyebrow": "Minuseek",
+    "title": "Admin Minuseek",
+    "description": "Console interne de gestion des tenants et des utilisateurs."
+  },
+  "auth": {
+    "connecting": "Connexion en cours...",
+    "error": "Impossible de contacter le service d'authentification.",
+    "logout": "Se deconnecter"
+  },
   "common": {
     "actions": {
-      "cancel": "Annuler"
+      "cancel": "Annuler",
+      "create": "Creer",
+      "retry": "Reessayer"
     },
     "errors": {
       "generic": "Une erreur est survenue",
-      "loadFailed": "Impossible de charger les données"
+      "loadFailed": "Impossible de charger les donnees"
     },
-    "loading": "Chargement…",
-    "window": {
-      "reduce": "Réduire la fenêtre",
-      "expand": "Agrandir la fenêtre",
-      "showFiles": "Afficher l'import",
-      "hideFiles": "Masquer l'import",
-      "showLayers": "Afficher les calques",
-      "hideLayers": "Masquer les calques"
-    }
-  },
-  "navigation": {
-    "myCases": "Mes affaires",
-    "navigationLabel": "Navigation",
-    "backToCases": "Retour aux affaires",
-    "informations": "Informations",
-    "tracesAndFingerprints": "Traces & empreintes"
-  },
-  "investigationCase": {
-    "status": {
-      "OPEN": "Ouverte",
-      "IN_PROGRESS": "En cours",
-      "UNDER_REVIEW": "En vérification",
-      "CLOSED": "Fermée"
-    },
-    "list": {
-      "title": "Mes affaires",
-      "addNew": "Ajouter une nouvelle affaire"
-    },
-    "card": {
-      "title": "Affaire N°{{caseNumber}}",
-      "pvNumber": "PV N°{{pvNumber}}",
-      "createdOn": "Créé le {{date}}"
-    },
-    "details": {
-      "title": "Affaire n°{{caseNumber}}",
-      "updatedAt": "Modifié le {{date}} à {{time}}",
-      "informations": "Informations",
-      "pvNumber": "Numéro de PV :",
-      "openedAt": "Date ouverture :",
-      "context": "Contexte",
-      "summary": "Résumé des faits :"
-    },
-    "comparison": {
-      "title": "Comparaison - Affaire N°{{id}}",
-      "tracesWindow": "Traces",
-      "tracesWindowWithFile": "Traces - {{fileName}}",
-      "referencePrintsWindow": "Empreintes",
-      "referencePrintsWindowWithFile": "Empreintes - {{fileName}}",
-      "selectTrace": "Sélectionnez une trace dans le carousel pour l'afficher ici",
-      "selectReferencePrint": "Sélectionnez une empreinte de référence pour l'afficher ici"
-    },
-    "form": {
-      "createTitle": "Créer une affaire",
-      "createDescription": "Renseignez les informations de la nouvelle affaire.",
-      "submit": "Créer l'affaire",
-      "submitting": "Création…",
-      "fields": {
-        "caseNumber": {
-          "label": "Numéro d'affaire",
-          "placeholder": "ex: 2026-004"
-        },
-        "pvNumber": {
-          "label": "Numéro du PV",
-          "placeholder": "ex: PV-2026-004"
-        },
-        "description": {
-          "label": "Description",
-          "placeholder": "Décrivez l'affaire..."
-        },
-        "location": {
-          "label": "Localisation",
-          "placeholder": "ex: 59 rue nationale, 75013 Paris"
-        }
-      }
-    },
-    "validation": {
-      "caseNumberRequired": "Le numéro d'affaire est requis",
-      "pvNumberRequired": "Le numéro de PV est requis",
-      "locationRequired": "La localisation est requise"
-    },
-    "success": {
-      "created": "Affaire créée avec succès"
-    }
-  },
-  "biometricImage": {
-    "import": {
-      "traces": "Importer vos traces ici",
-      "referencePrints": "Importer vos empreintes ici",
-      "button": "Importer",
-      "uploading": "Envoi…"
-    },
-    "upload": {
-      "success": "Image importée avec succès",
-      "error": "L'import a échoué"
-    },
-    "zoom": {
-      "in": "Zoomer",
-      "out": "Dézoomer",
-      "recenter": "Recentrer l'image"
-    },
-    "layers": {
-      "title": "Calques",
-      "close": "Fermer le panneau des calques",
-      "empty": "Aucun calque pour cette image",
-      "createError": "Impossible de créer le calque",
-      "updateError": "Impossible de mettre à jour le calque",
-      "deleteError": "Impossible de supprimer le calque"
-    },
-    "toolbar": {
-      "modes": {
-        "image": "Édition",
-        "annotation": "Annotations"
-      },
-      "tools": {
-        "mirror": "Miroir",
-        "rotation": "Rotation",
-        "luminosity": "Luminosité",
-        "contrast": "Contraste",
-        "invertColors": "Inversion chromatique",
-        "saturation": "Saturation",
-        "palette": "Palette de couleurs",
-        "point": "Point",
-        "pointArrow": "Point & flèche",
-        "pencil": "Crayon"
-      }
-    },
-    "delete": {
-      "success": "Image supprimée",
-      "error": "La suppression a échoué",
-      "aria": "Supprimer {{fileName}}",
-      "confirmTitle": "Supprimer cette image ?",
-      "confirmDescription": "Toutes les modifications apportées à cette image seront supprimées. Cette action est irréversible.",
-      "confirmAction": "Supprimer"
-    },
-    "nav": {
-      "previous": "Voir les images précédentes",
-      "next": "Voir les images suivantes"
-    }
-  },
-  "auth": {
-    "connecting": "Connexion en cours…",
-    "logout": "Déconnexion",
-    "tenantRequired": {
-      "title": "Organisation requise",
-      "message": "Accédez à l'application via l'adresse de votre organisation."
-    },
-    "error": "Impossible de contacter le service d'authentification."
+    "loading": "Chargement..."
   }
 }

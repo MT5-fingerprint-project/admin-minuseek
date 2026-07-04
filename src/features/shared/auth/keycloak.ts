@@ -1,43 +1,34 @@
 import Keycloak from 'keycloak-js'
-import { KEYCLOAK_URL } from '@/features/shared/constants/global.constants'
-
-const KEYCLOAK_CLIENT_ID = 'front-minuseek'
-function realmForSlug(slug: string): string {
-  return `minuseek-${slug}`
-}
+import {
+  KEYCLOAK_CLIENT_ID,
+  KEYCLOAK_REALM,
+  KEYCLOAK_URL,
+} from '@/features/shared/constants/global.constants'
 
 type KeycloakEntry = {
   keycloak: Keycloak
   initialization: Promise<boolean>
 }
 
-const instancesBySlug = new Map<string, KeycloakEntry>()
-
+let entry: KeycloakEntry | null = null
 let activeKeycloak: Keycloak | null = null
-let activeTenantSlug: string | null = null
 
-export function setActiveKeycloak(keycloak: Keycloak, slug: string): void {
+export function setActiveKeycloak(keycloak: Keycloak): void {
   activeKeycloak = keycloak
-  activeTenantSlug = slug
 }
 
 export function getActiveKeycloak(): Keycloak | null {
   return activeKeycloak
 }
 
-export function getActiveTenantSlug(): string | null {
-  return activeTenantSlug
-}
-
-export function getKeycloak(slug: string): KeycloakEntry {
-  const existing = instancesBySlug.get(slug)
-  if (existing) {
-    return existing
+export function getKeycloak(): KeycloakEntry {
+  if (entry) {
+    return entry
   }
 
   const keycloak = new Keycloak({
     url: KEYCLOAK_URL,
-    realm: realmForSlug(slug),
+    realm: KEYCLOAK_REALM,
     clientId: KEYCLOAK_CLIENT_ID,
   })
 
@@ -47,7 +38,6 @@ export function getKeycloak(slug: string): KeycloakEntry {
     checkLoginIframe: false,
   })
 
-  const entry: KeycloakEntry = { keycloak, initialization }
-  instancesBySlug.set(slug, entry)
+  entry = { keycloak, initialization }
   return entry
 }

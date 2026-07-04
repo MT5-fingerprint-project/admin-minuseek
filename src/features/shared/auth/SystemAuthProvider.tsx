@@ -3,18 +3,17 @@ import { useTranslation } from 'react-i18next'
 import { AuthContext, type AuthContextValue } from './auth-context'
 import { getKeycloak, setActiveKeycloak } from './keycloak'
 
-type AuthProviderProps = {
-  slug: string
+type SystemAuthProviderProps = {
   children: ReactNode
 }
 
-export function AuthProvider({ slug, children }: AuthProviderProps) {
+export function SystemAuthProvider({ children }: SystemAuthProviderProps) {
   const { t } = useTranslation()
   const [status, setStatus] = useState<'connecting' | 'authenticated' | 'error'>('connecting')
 
   useEffect(() => {
     let isActive = true
-    const { keycloak, initialization } = getKeycloak(slug)
+    const { keycloak, initialization } = getKeycloak()
 
     initialization
       .then((authenticated) => {
@@ -22,7 +21,7 @@ export function AuthProvider({ slug, children }: AuthProviderProps) {
           void keycloak.login()
           return
         }
-        setActiveKeycloak(keycloak, slug)
+        setActiveKeycloak(keycloak)
         if (isActive) {
           setStatus('authenticated')
         }
@@ -36,23 +35,22 @@ export function AuthProvider({ slug, children }: AuthProviderProps) {
     return () => {
       isActive = false
     }
-  }, [slug])
+  }, [])
 
   if (status !== 'authenticated') {
     return (
-      <div className="flex min-h-screen items-center justify-center text-muted-foreground">
+      <div className="flex min-h-screen items-center justify-center bg-background text-muted-foreground">
         {t(status === 'error' ? 'auth.error' : 'auth.connecting')}
       </div>
     )
   }
 
-  const { keycloak } = getKeycloak(slug)
-
+  const { keycloak } = getKeycloak()
   const value: AuthContextValue = {
-    slug,
     username: (keycloak.tokenParsed?.preferred_username as string | undefined) ?? undefined,
+    email: (keycloak.tokenParsed?.email as string | undefined) ?? undefined,
     logout: () => {
-      void keycloak.logout({ redirectUri: `${window.location.origin}/${slug}` })
+      void keycloak.logout({ redirectUri: window.location.origin })
     },
   }
 
