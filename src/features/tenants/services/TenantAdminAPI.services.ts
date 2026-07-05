@@ -1,34 +1,67 @@
 import { apiClient } from '@/features/shared/lib/apiClient'
 import type {
+  CreatedTenantUser,
   CreateTenantInput,
   CreateTenantUserInput,
+  PageMeta,
+  PaginatedResult,
   Tenant,
   TenantUser,
+  TenantUsersPagination,
 } from '@/features/tenants/types/tenant'
 import { tenantAdminApiPaths } from './tenantAdminApiPaths'
 
 interface TenantDTO {
-  id: string
+  id?: string
   slug: string
-  display_name: string
-  database_name: string
-  identity_provider_realm: string
-  created_at: string
-  updated_at: string
+  displayName?: string
+  display_name?: string
+  databaseName?: string
+  database_name?: string
+  identityProviderRealm?: string
+  identity_provider_realm?: string
+  realm?: string
+  createdAt?: string
+  created_at?: string
+  updatedAt?: string
+  updated_at?: string
 }
 
 interface TenantUserDTO {
   id: string
   username: string
   email: string
+  firstName?: string | null
   first_name?: string | null
+  lastName?: string | null
   last_name?: string | null
   enabled: boolean
-  email_verified: boolean
+  emailVerified?: boolean
+  email_verified?: boolean
+  temporaryPassword?: string | null
+  temporary_password?: string | null
 }
 
 interface ListResponseDTO<T> {
   data: T[]
+}
+
+interface PageMetaDTO {
+  page?: number
+  limit?: number
+  itemCount?: number
+  item_count?: number
+  pageCount?: number
+  page_count?: number
+  hasPreviousPage?: boolean
+  has_previous_page?: boolean
+  hasNextPage?: boolean
+  has_next_page?: boolean
+}
+
+interface PaginatedResponseDTO<T> {
+  data: T[]
+  meta: PageMetaDTO
 }
 
 function unwrapList<T>(payload: T[] | ListResponseDTO<T>): T[] {
@@ -36,14 +69,18 @@ function unwrapList<T>(payload: T[] | ListResponseDTO<T>): T[] {
 }
 
 function toTenant(dto: TenantDTO): Tenant {
+  const createdAt = dto.createdAt ?? dto.created_at
+  const updatedAt = dto.updatedAt ?? dto.updated_at
+
   return {
-    id: dto.id,
+    id: dto.id ?? dto.slug,
     slug: dto.slug,
-    displayName: dto.display_name,
-    databaseName: dto.database_name,
-    identityProviderRealm: dto.identity_provider_realm,
-    createdAt: new Date(dto.created_at),
-    updatedAt: new Date(dto.updated_at),
+    displayName: dto.displayName ?? dto.display_name ?? dto.slug,
+    databaseName: dto.databaseName ?? dto.database_name ?? '',
+    identityProviderRealm:
+      dto.identityProviderRealm ?? dto.identity_provider_realm ?? dto.realm ?? '',
+    createdAt: createdAt ? new Date(createdAt) : new Date(),
+    updatedAt: updatedAt ? new Date(updatedAt) : new Date(),
   }
 }
 
@@ -52,10 +89,50 @@ function toTenantUser(dto: TenantUserDTO): TenantUser {
     id: dto.id,
     username: dto.username,
     email: dto.email,
-    firstName: dto.first_name ?? undefined,
-    lastName: dto.last_name ?? undefined,
+    firstName: dto.firstName ?? dto.first_name ?? undefined,
+    lastName: dto.lastName ?? dto.last_name ?? undefined,
     enabled: dto.enabled,
-    emailVerified: dto.email_verified,
+    emailVerified: dto.emailVerified ?? dto.email_verified ?? false,
+  }
+}
+
+function toCreatedTenantUser(dto: TenantUserDTO): CreatedTenantUser {
+  return {
+    ...toTenantUser(dto),
+    temporaryPassword: dto.temporaryPassword ?? dto.temporary_password ?? null,
+  }
+}
+
+function toPageMeta(dto: PageMetaDTO | undefined, fallbackItemCount: number, pagination: TenantUsersPagination): PageMeta {
+  const itemCount = dto?.itemCount ?? dto?.item_count ?? fallbackItemCount
+  const page = dto?.page ?? pagination.page
+  const limit = dto?.limit ?? pagination.limit
+  const pageCount = dto?.pageCount ?? dto?.page_count ?? Math.ceil(itemCount / limit)
+
+  return {
+    page,
+    limit,
+    itemCount,
+    pageCount,
+    hasPreviousPage: dto?.hasPreviousPage ?? dto?.has_previous_page ?? page > 1,
+    hasNextPage: dto?.hasNextPage ?? dto?.has_next_page ?? page < pageCount,
+  }
+}
+
+function toTenantUserPage(
+  payload: TenantUserDTO[] | PaginatedResponseDTO<TenantUserDTO>,
+  pagination: TenantUsersPagination
+): PaginatedResult<TenantUser> {
+  if (Array.isArray(payload)) {
+    return {
+      data: payload.map(toTenantUser),
+      meta: toPageMeta(undefined, payload.length, pagination),
+    }
+  }
+
+  return {
+    data: payload.data.map(toTenantUser),
+    meta: toPageMeta(payload.meta, payload.data.length, pagination),
   }
 }
 
@@ -68,24 +145,36 @@ export const TenantAdminAPI = {
   async createTenant(input: CreateTenantInput): Promise<Tenant> {
     const response = await apiClient.post<TenantDTO>(tenantAdminApiPaths.tenants, {
       slug: input.slug,
-      display_name: input.displayName,
+      displayName: input.displayName,
     })
     return toTenant(response.data)
   },
 
-  async listTenantUsers(tenantSlug: string): Promise<TenantUser[]> {
-    const response = await apiClient.get<TenantUserDTO[] | ListResponseDTO<TenantUserDTO>>(
-      tenantAdminApiPaths.tenantUsers(tenantSlug)
-    )
-    return unwrapList(response.data).map(toTenantUser)
+  async deleteTenant(tenantSlug: string): Promise<void> {
+    await apiClient.delete(tenantAdminApiPaths.tenant(tenantSlug))
   },
 
-  async createTenantUser(tenantSlug: string, input: CreateTenantUserInput): Promise<TenantUser> {
+  async listTenantUsers(
+    tenantSlug: string,
+    pagination: TenantUsersPagination
+  ): Promise<PaginatedResult<TenantUser>> {
+    const response = await apiClient.get<TenantUserDTO[] | PaginatedResponseDTO<TenantUserDTO>>(
+      tenantAdminApiPaths.tenantUsers(tenantSlug),
+      { params: pagination }
+    )
+    return toTenantUserPage(response.data, pagination)
+  },
+
+  async createTenantUser(tenantSlug: string, input: CreateTenantUserInput): Promise<CreatedTenantUser> {
     const response = await apiClient.post<TenantUserDTO>(tenantAdminApiPaths.tenantUsers(tenantSlug), {
       email: input.email,
-      first_name: input.firstName,
-      last_name: input.lastName,
+      firstName: input.firstName,
+      lastName: input.lastName,
     })
-    return toTenantUser(response.data)
+    return toCreatedTenantUser(response.data)
+  },
+
+  async deleteTenantUser(tenantSlug: string, userId: string): Promise<void> {
+    await apiClient.delete(tenantAdminApiPaths.tenantUser(tenantSlug, userId))
   },
 }

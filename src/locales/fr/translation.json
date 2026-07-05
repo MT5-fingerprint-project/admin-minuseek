@@ -14,7 +14,10 @@
   "common": {
     "actions": {
       "cancel": "Annuler",
+      "copied": "Copie",
+      "copy": "Copier",
       "create": "Creer",
+      "delete": "Supprimer",
       "retry": "Reessayer"
     },
     "errors": {
@@ -27,6 +30,9 @@
     "tenants": "Tenants"
   },
   "tenants": {
+    "errors": {
+      "deleteFailed": "Impossible de supprimer le tenant"
+    },
     "fields": {
       "slug": "Slug",
       "databaseName": "Base de donnees",
@@ -49,6 +55,16 @@
         }
       }
     },
+    "createDialog": {
+      "title": "Creer un tenant",
+      "description": "Le tenant cree sera selectionne automatiquement dans la console."
+    },
+    "sidebar": {
+      "eyebrow": "Organisations",
+      "title": "Tenants",
+      "description": "Navigue entre les tenants avant toute action de gestion.",
+      "createTenant": "Creer un nouveau tenant"
+    },
     "list": {
       "title": "Tenants existants",
       "description": "Selectionne un tenant pour gerer ses utilisateurs.",
@@ -61,8 +77,24 @@
       "emptyDescription": "Cree ou selectionne un tenant pour afficher ses details.",
       "noSelection": "Aucun tenant n'est selectionne."
     },
+    "danger": {
+      "title": "Zone dangereuse",
+      "description": "Actions irreversibles sur l'organisation selectionnee.",
+      "deleteTitle": "Supprimer completement cette organisation",
+      "deleteDescription": "Cette action supprimera le tenant {{slug}} et ses rattachements cote serveur.",
+      "deleteButton": "Supprimer l'organisation"
+    },
+    "deleteDialog": {
+      "title": "Supprimer l'organisation",
+      "description": "Tu vas supprimer definitivement {{name}} ({{slug}}). Cette action doit etre reservee aux cas de nettoyage ou d'erreur de creation.",
+      "confirmationLabel": "Confirmation",
+      "confirmationHelp": "Recopie le slug \"{{slug}}\" pour confirmer la suppression complete.",
+      "confirm": "Supprimer definitivement",
+      "deleting": "Suppression..."
+    },
     "success": {
-      "created": "Tenant cree"
+      "created": "Tenant cree",
+      "deleted": "Tenant supprime"
     },
     "validation": {
       "slugRequired": "Le slug est requis",
@@ -72,11 +104,14 @@
   },
   "tenantUsers": {
     "errors": {
-      "noTenant": "Selectionne un tenant avant de creer un utilisateur"
+      "noTenant": "Selectionne un tenant avant de creer un utilisateur",
+      "deleteFailed": "Impossible de supprimer l'utilisateur"
     },
     "form": {
       "title": "Creer un utilisateur",
       "description": "Ajoute un utilisateur dans le tenant selectionne.",
+      "activeTenant": "Tenant actif",
+      "locked": "Selectionne un tenant avant de pouvoir creer un utilisateur.",
       "submit": "Creer l'utilisateur",
       "submitting": "Creation...",
       "fields": {
@@ -96,10 +131,39 @@
     },
     "list": {
       "title": "Utilisateurs du tenant",
-      "description": "Creation et verification rapide des utilisateurs rattaches au tenant.",
+      "description": "Creation, verification et suppression des utilisateurs rattaches a {{tenant}} ({{slug}}).",
       "empty": "Aucun utilisateur disponible pour ce tenant.",
       "error": "Impossible de charger les utilisateurs.",
       "noTenant": "Selectionne un tenant pour afficher ses utilisateurs."
+    },
+    "actions": {
+      "create": "Ajouter un utilisateur",
+      "delete": "Supprimer"
+    },
+    "credentials": {
+      "title": "Identifiants de premiere connexion",
+      "description": "Utilisateur cree pour {{email}}. Transmets ce mot de passe temporaire une seule fois.",
+      "existingUser": "Cet utilisateur existait deja dans le tenant : aucun nouveau mot de passe temporaire n'a ete genere."
+    },
+    "pagination": {
+      "current": "{{page}} / {{pageCount}}",
+      "next": "Page suivante",
+      "pageSize": "Lignes par page",
+      "previous": "Page precedente",
+      "total": "{{count}} utilisateur(s)"
+    },
+    "table": {
+      "actions": "Actions",
+      "name": "Nom",
+      "noName": "Non renseigne",
+      "status": "Statut",
+      "user": "Utilisateur"
+    },
+    "deleteDialog": {
+      "title": "Supprimer l'utilisateur",
+      "description": "Supprimer {{email}} du tenant {{tenant}} ({{slug}}).",
+      "confirm": "Supprimer l'utilisateur",
+      "deleting": "Suppression..."
     },
     "status": {
       "enabled": "Actif",
@@ -108,7 +172,8 @@
       "unverified": "Email non verifie"
     },
     "success": {
-      "created": "Utilisateur cree"
+      "created": "Utilisateur cree",
+      "deleted": "Utilisateur supprime"
     },
     "validation": {
       "emailInvalid": "Adresse email invalide"

@@ -21,6 +21,29 @@ export interface TenantUser {
   emailVerified: boolean
 }
 
+export interface CreatedTenantUser extends TenantUser {
+  temporaryPassword: string | null
+}
+
+export interface PageMeta {
+  page: number
+  limit: number
+  itemCount: number
+  pageCount: number
+  hasPreviousPage: boolean
+  hasNextPage: boolean
+}
+
+export interface PaginatedResult<T> {
+  data: T[]
+  meta: PageMeta
+}
+
+export interface TenantUsersPagination {
+  page: number
+  limit: number
+}
+
 export const createTenantSchema = z.object({
   slug: z
     .string()
