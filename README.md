@@ -34,7 +34,7 @@ de header `X-Tenant-Slug`.
 | `make lint` | Lance `pnpm lint` dans Docker |
 | `make build-pnpm` | Lance `pnpm build` dans Docker |
 
-Le port interne Vite reste `5173`; le port expose localement est `5174`.
+Le port Vite local est `5174`, dans le conteneur comme sur l'hôte.
 
 ## Architecture
 
