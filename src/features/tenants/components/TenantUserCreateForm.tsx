@@ -3,8 +3,19 @@ import { useTranslation } from 'react-i18next'
 import { Button } from '@/features/shared/ui/button'
 import { Field, FieldError, FieldLabel } from '@/features/shared/ui/field'
 import { Input } from '@/features/shared/ui/input'
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/features/shared/ui/select'
 import { useCreateTenantUserForm } from '@/features/tenants/hooks/useCreateTenantUserForm'
-import type { CreateTenantUserInput, Tenant } from '@/features/tenants/types/tenant'
+import {
+  CREATABLE_TENANT_USER_ROLES,
+  type CreateTenantUserInput,
+  type Tenant,
+} from '@/features/tenants/types/tenant'
 
 type TenantUserCreateFormProps = {
   tenant: Tenant | null
@@ -78,38 +89,125 @@ export function TenantUserCreateForm({ tenant, onSubmit }: TenantUserCreateFormP
       <div className="grid gap-4 md:grid-cols-2">
         <form.Field
           name="firstName"
-          children={(field) => (
-            <Field>
-              <FieldLabel htmlFor={field.name}>{t('tenantUsers.form.fields.firstName.label')}</FieldLabel>
-              <Input
-                id={field.name}
-                name={field.name}
-                value={field.state.value}
-                onBlur={field.handleBlur}
-                onChange={(event) => field.handleChange(event.target.value)}
-                placeholder={t('tenantUsers.form.fields.firstName.placeholder')}
-                disabled={isDisabled}
-              />
-            </Field>
-          )}
+          children={(field) => {
+            const isInvalid = field.state.meta.isTouched && !field.state.meta.isValid
+            return (
+              <Field data-invalid={isInvalid}>
+                <FieldLabel htmlFor={field.name}>{t('tenantUsers.form.fields.firstName.label')}</FieldLabel>
+                <Input
+                  id={field.name}
+                  name={field.name}
+                  value={field.state.value}
+                  onBlur={field.handleBlur}
+                  onChange={(event) => field.handleChange(event.target.value)}
+                  placeholder={t('tenantUsers.form.fields.firstName.placeholder')}
+                  aria-invalid={isInvalid}
+                  disabled={isDisabled}
+                />
+                {isInvalid && <FieldError errors={field.state.meta.errors} />}
+              </Field>
+            )
+          }}
         />
 
         <form.Field
           name="lastName"
-          children={(field) => (
-            <Field>
-              <FieldLabel htmlFor={field.name}>{t('tenantUsers.form.fields.lastName.label')}</FieldLabel>
-              <Input
-                id={field.name}
-                name={field.name}
+          children={(field) => {
+            const isInvalid = field.state.meta.isTouched && !field.state.meta.isValid
+            return (
+              <Field data-invalid={isInvalid}>
+                <FieldLabel htmlFor={field.name}>{t('tenantUsers.form.fields.lastName.label')}</FieldLabel>
+                <Input
+                  id={field.name}
+                  name={field.name}
+                  value={field.state.value}
+                  onBlur={field.handleBlur}
+                  onChange={(event) => field.handleChange(event.target.value)}
+                  placeholder={t('tenantUsers.form.fields.lastName.placeholder')}
+                  aria-invalid={isInvalid}
+                  disabled={isDisabled}
+                />
+                {isInvalid && <FieldError errors={field.state.meta.errors} />}
+              </Field>
+            )
+          }}
+        />
+      </div>
+
+      <form.Field
+        name="role"
+        children={(field) => {
+          const isInvalid = field.state.meta.isTouched && !field.state.meta.isValid
+          return (
+            <Field data-invalid={isInvalid}>
+              <FieldLabel htmlFor={field.name}>{t('tenantUsers.form.fields.role.label')}</FieldLabel>
+              <Select
                 value={field.state.value}
-                onBlur={field.handleBlur}
-                onChange={(event) => field.handleChange(event.target.value)}
-                placeholder={t('tenantUsers.form.fields.lastName.placeholder')}
+                onValueChange={(role) => field.handleChange(role as CreateTenantUserInput['role'])}
                 disabled={isDisabled}
-              />
+              >
+                <SelectTrigger id={field.name} className="w-full" aria-invalid={isInvalid}>
+                  <SelectValue placeholder={t('tenantUsers.form.fields.role.placeholder')} />
+                </SelectTrigger>
+                <SelectContent>
+                  {CREATABLE_TENANT_USER_ROLES.map((role) => (
+                    <SelectItem key={role} value={role}>
+                      {t(`tenantUsers.roles.${role}`)}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+              {isInvalid && <FieldError errors={field.state.meta.errors} />}
             </Field>
-          )}
+          )
+        }}
+      />
+
+      <div className="grid gap-4 md:grid-cols-2">
+        <form.Field
+          name="grade"
+          children={(field) => {
+            const isInvalid = field.state.meta.isTouched && !field.state.meta.isValid
+            return (
+              <Field data-invalid={isInvalid}>
+                <FieldLabel htmlFor={field.name}>{t('tenantUsers.form.fields.grade.label')}</FieldLabel>
+                <Input
+                  id={field.name}
+                  name={field.name}
+                  value={field.state.value}
+                  onBlur={field.handleBlur}
+                  onChange={(event) => field.handleChange(event.target.value)}
+                  placeholder={t('tenantUsers.form.fields.grade.placeholder')}
+                  aria-invalid={isInvalid}
+                  disabled={isDisabled}
+                />
+                {isInvalid && <FieldError errors={field.state.meta.errors} />}
+              </Field>
+            )
+          }}
+        />
+
+        <form.Field
+          name="serviceNumber"
+          children={(field) => {
+            const isInvalid = field.state.meta.isTouched && !field.state.meta.isValid
+            return (
+              <Field data-invalid={isInvalid}>
+                <FieldLabel htmlFor={field.name}>{t('tenantUsers.form.fields.serviceNumber.label')}</FieldLabel>
+                <Input
+                  id={field.name}
+                  name={field.name}
+                  value={field.state.value}
+                  onBlur={field.handleBlur}
+                  onChange={(event) => field.handleChange(event.target.value)}
+                  placeholder={t('tenantUsers.form.fields.serviceNumber.placeholder')}
+                  aria-invalid={isInvalid}
+                  disabled={isDisabled}
+                />
+                {isInvalid && <FieldError errors={field.state.meta.errors} />}
+              </Field>
+            )
+          }}
         />
       </div>
 

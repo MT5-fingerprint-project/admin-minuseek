@@ -3,13 +3,17 @@ import { useForm } from '@tanstack/react-form'
 import { useTranslation } from 'react-i18next'
 import {
   createTenantUserSchema,
+  type CreateTenantUserFormValues,
   type CreateTenantUserInput,
 } from '@/features/tenants/types/tenant'
 
-const DEFAULT_VALUES: CreateTenantUserInput = {
+const DEFAULT_VALUES: CreateTenantUserFormValues = {
   email: '',
   firstName: '',
   lastName: '',
+  role: '',
+  grade: '',
+  serviceNumber: '',
 }
 
 type UseCreateTenantUserFormArgs = {
@@ -29,7 +33,8 @@ export function useCreateTenantUserForm({ onSubmit, onSuccess }: UseCreateTenant
     onSubmit: async ({ value }) => {
       try {
         setSubmitError(null)
-        await onSubmit(value)
+        // Le validateur vient de passer : ce parse rend les valeurs nettoyées, avec le rôle restreint.
+        await onSubmit(createTenantUserSchema.parse(value))
         form.reset()
         onSuccess?.()
       } catch (error) {
