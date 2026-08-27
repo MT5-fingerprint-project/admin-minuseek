@@ -1,13 +1,15 @@
 import { apiClient } from '@/features/shared/lib/apiClient'
-import type {
-  CreatedTenantUser,
-  CreateTenantInput,
-  CreateTenantUserInput,
-  PageMeta,
-  PaginatedResult,
-  Tenant,
-  TenantUser,
-  TenantUsersPagination,
+import {
+  TENANT_USER_ROLES,
+  type CreatedTenantUser,
+  type CreateTenantInput,
+  type CreateTenantUserInput,
+  type PageMeta,
+  type PaginatedResult,
+  type Tenant,
+  type TenantUser,
+  type TenantUserRole,
+  type TenantUsersPagination,
 } from '@/features/tenants/types/tenant'
 import { tenantAdminApiPaths } from './tenantAdminApiPaths'
 
@@ -35,6 +37,7 @@ interface TenantUserDTO {
   first_name?: string | null
   lastName?: string | null
   last_name?: string | null
+  role?: string | null
   enabled: boolean
   emailVerified?: boolean
   email_verified?: boolean
@@ -84,6 +87,10 @@ function toTenant(dto: TenantDTO): Tenant {
   }
 }
 
+function toTenantUserRole(value: string | null | undefined): TenantUserRole | undefined {
+  return TENANT_USER_ROLES.find((role) => role === value)
+}
+
 function toTenantUser(dto: TenantUserDTO): TenantUser {
   return {
     id: dto.id,
@@ -91,6 +98,7 @@ function toTenantUser(dto: TenantUserDTO): TenantUser {
     email: dto.email,
     firstName: dto.firstName ?? dto.first_name ?? undefined,
     lastName: dto.lastName ?? dto.last_name ?? undefined,
+    role: toTenantUserRole(dto.role),
     enabled: dto.enabled,
     emailVerified: dto.emailVerified ?? dto.email_verified ?? false,
   }
@@ -170,6 +178,9 @@ export const TenantAdminAPI = {
       email: input.email,
       firstName: input.firstName,
       lastName: input.lastName,
+      role: input.role,
+      grade: input.grade,
+      serviceNumber: input.serviceNumber,
     })
     return toCreatedTenantUser(response.data)
   },

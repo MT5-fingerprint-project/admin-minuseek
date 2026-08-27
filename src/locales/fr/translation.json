@@ -120,12 +120,24 @@
           "placeholder": "prenom.nom@example.com"
         },
         "firstName": {
-          "label": "Prenom",
-          "placeholder": "Prenom"
+          "label": "Prénom",
+          "placeholder": "Prénom"
         },
         "lastName": {
           "label": "Nom",
           "placeholder": "Nom"
+        },
+        "role": {
+          "label": "Rôle",
+          "placeholder": "Choisir un rôle"
+        },
+        "grade": {
+          "label": "Grade",
+          "placeholder": "Capitaine"
+        },
+        "serviceNumber": {
+          "label": "Matricule",
+          "placeholder": "PTS-0007"
         }
       }
     },
@@ -155,7 +167,9 @@
     "table": {
       "actions": "Actions",
       "name": "Nom",
-      "noName": "Non renseigne",
+      "noName": "Non renseigné",
+      "noRole": "Non renseigné",
+      "role": "Rôle",
       "status": "Statut",
       "user": "Utilisateur"
     },
@@ -176,7 +190,17 @@
       "deleted": "Utilisateur supprime"
     },
     "validation": {
-      "emailInvalid": "Adresse email invalide"
+      "emailInvalid": "Adresse email invalide",
+      "firstNameRequired": "Le prénom est requis",
+      "lastNameRequired": "Le nom est requis",
+      "roleRequired": "Choisissez un rôle",
+      "gradeRequired": "Le grade est requis",
+      "serviceNumberRequired": "Le matricule est requis"
+    },
+    "roles": {
+      "ADMIN": "Responsable de service",
+      "OPERATOR": "Opérateur",
+      "EXPERT": "Expert"
     }
   }
 }

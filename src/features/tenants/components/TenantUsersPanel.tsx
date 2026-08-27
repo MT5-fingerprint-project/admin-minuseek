@@ -107,11 +107,12 @@ export function TenantUsersPanel({ tenant }: TenantUsersPanelProps) {
       ) : (
         <div className="overflow-hidden rounded-3xl border bg-background">
           <div className="overflow-auto">
-            <table className="w-full min-w-[760px] text-left text-sm">
+            <table className="w-full min-w-[860px] text-left text-sm">
               <thead className="bg-muted/95 text-xs uppercase tracking-[0.14em] text-muted-foreground">
                 <tr>
                   <th className="px-4 py-3 font-medium">{t('tenantUsers.table.user')}</th>
                   <th className="px-4 py-3 font-medium">{t('tenantUsers.table.name')}</th>
+                  <th className="px-4 py-3 font-medium">{t('tenantUsers.table.role')}</th>
                   <th className="px-4 py-3 font-medium">{t('tenantUsers.table.status')}</th>
                   <th className="px-4 py-3 text-right font-medium">{t('tenantUsers.table.actions')}</th>
                 </tr>
@@ -119,7 +120,7 @@ export function TenantUsersPanel({ tenant }: TenantUsersPanelProps) {
               <tbody>
                 {users.length === 0 ? (
                   <tr>
-                    <td className="px-4 py-8 text-center text-muted-foreground" colSpan={4}>
+                    <td className="px-4 py-8 text-center text-muted-foreground" colSpan={5}>
                       {t('tenantUsers.list.empty')}
                     </td>
                   </tr>
@@ -132,6 +133,13 @@ export function TenantUsersPanel({ tenant }: TenantUsersPanelProps) {
                       </td>
                       <td className="px-4 py-3 align-middle text-muted-foreground">
                         {[user.firstName, user.lastName].filter(Boolean).join(' ') || t('tenantUsers.table.noName')}
+                      </td>
+                      <td className="px-4 py-3 align-middle">
+                        {user.role ? (
+                          <Badge variant="outline">{t(`tenantUsers.roles.${user.role}`)}</Badge>
+                        ) : (
+                          <span className="text-muted-foreground">{t('tenantUsers.table.noRole')}</span>
+                        )}
                       </td>
                       <td className="px-4 py-3 align-middle">
                         <div className="flex flex-wrap gap-2">
