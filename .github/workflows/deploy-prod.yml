@@ -1,7 +1,7 @@
 # Déploiement PROD : déclenché par un tag v*. L'admin est REBUILDÉ avec les
 # variables prod, comme le front Vite.
 # ⚠️ Inerte tant que la prod est au repos : nécessite GCP_SA_KEY_PROD et
-# l'infra prod appliquée (bucket minuseek-admin-prod).
+# l'infra prod appliquée (bucket minuseek-prod-admin).
 name: deploy-prod
 
 on:
@@ -11,7 +11,7 @@ on:
 concurrency: deploy-prod
 
 env:
-  BUCKET: minuseek-admin-prod
+  BUCKET: minuseek-prod-admin
   VITE_API_URL: https://api.minuseek.fr/api
   VITE_KEYCLOAK_URL: https://auth.minuseek.fr
   VITE_KEYCLOAK_REALM: minuseek-system

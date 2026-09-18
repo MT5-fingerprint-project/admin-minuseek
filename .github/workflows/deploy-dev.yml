@@ -1,6 +1,6 @@
 # Déploiement continu DEV : chaque merge sur main build le bundle Vite admin
 # (vars dev bakées) et le synchronise vers le bucket admin.
-# Secret requis : GCP_SA_KEY_DEV (clé JSON deploy-ci@dev-minuseek).
+# Secret requis : GCP_SA_KEY_DEV (clé JSON deploy-ci@minuseek-dev).
 name: deploy-dev
 
 on:
@@ -10,7 +10,7 @@ on:
 concurrency: deploy-dev
 
 env:
-  BUCKET: minuseek-admin-dev
+  BUCKET: minuseek-dev-admin
   VITE_API_URL: https://api-dev.minuseek.fr/api
   VITE_KEYCLOAK_URL: https://auth-dev.minuseek.fr
   VITE_KEYCLOAK_REALM: minuseek-system
